@@ -8,6 +8,9 @@ on:
       - 'src/infra/agents/cart-manager.json'
       - 'src/prompts/CartManagerPrompt.txt'
 
+permissions:
+  contents: read
+
 jobs:
   deploy-agent:
     runs-on: ubuntu-latest

@@ -8,6 +8,9 @@ on:
       - 'src/infra/agents/interior-designer.json'
       - 'src/prompts/InteriorDesignAgentPrompt.txt'
 
+permissions:
+  contents: read
+
 jobs:
   deploy-agent:
     runs-on: ubuntu-latest

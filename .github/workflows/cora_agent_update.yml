@@ -8,6 +8,9 @@ on:
       - 'src/infra/agents/cora.json'
       - 'src/prompts/ShopperAgentPrompt.txt'
 
+permissions:
+  contents: read
+
 jobs:
   deploy-agent:
     runs-on: ubuntu-latest
