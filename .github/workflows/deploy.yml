@@ -45,7 +45,26 @@ jobs:
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --image ${{ env.ACR_LOGIN_SERVER }}/${{ env.ACR_IMAGE_NAME }}:${IMAGE_TAG} \
             --set-env-vars \
-              FOUNDRY_ENDPOINT=secretref:foundry-endpoint \
-              gpt_endpoint=secretref:gpt-endpoint \
-              embedding_endpoint=secretref:embedding-endpoint \
-              phi_4_endpoint=secretref:phi-4-endpoint
+              FOUNDRY_ENDPOINT="${{ secrets.FOUNDRY_ENDPOINT }}" \
+              FOUNDRY_API_VERSION="${{ secrets.FOUNDRY_API_VERSION }}" \
+              gpt_endpoint="${{ secrets.GPT_ENDPOINT }}" \
+              gpt_deployment="${{ secrets.GPT_DEPLOYMENT }}" \
+              gpt_api_version="${{ secrets.GPT_API_VERSION }}" \
+              embedding_endpoint="${{ secrets.EMBEDDING_ENDPOINT }}" \
+              embedding_deployment="${{ secrets.EMBEDDING_DEPLOYMENT }}" \
+              embedding_api_version="${{ secrets.EMBEDDING_API_VERSION }}" \
+              phi_4_endpoint="${{ secrets.PHI_4_ENDPOINT }}" \
+              phi_4_deployment="${{ secrets.PHI_4_DEPLOYMENT }}" \
+              phi_4_api_version="${{ secrets.PHI_4_API_VERSION }}" \
+              COSMOS_ENDPOINT="${{ secrets.COSMOS_ENDPOINT }}" \
+              DATABASE_NAME="${{ secrets.DATABASE_NAME }}" \
+              CONTAINER_NAME="${{ secrets.CONTAINER_NAME }}" \
+              storage_account_name="${{ secrets.STORAGE_ACCOUNT_NAME }}" \
+              storage_container_name="${{ secrets.STORAGE_CONTAINER_NAME }}" \
+              APPLICATIONINSIGHTS_CONNECTION_STRING="${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}" \
+              customer_loyalty="${{ secrets.CUSTOMER_LOYALTY }}" \
+              inventory_agent="${{ secrets.INVENTORY_AGENT }}" \
+              interior_designer="${{ secrets.INTERIOR_DESIGNER }}" \
+              cora="${{ secrets.CORA }}" \
+              cart_manager="${{ secrets.CART_MANAGER }}" \
+              handoff_service="${{ secrets.HANDOFF_SERVICE }}"
