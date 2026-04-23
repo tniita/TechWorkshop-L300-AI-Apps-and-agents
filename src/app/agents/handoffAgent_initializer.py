@@ -30,7 +30,6 @@ name="handoff-service"
 description="Zava Handoff Service Agent"
 instructions=HANDOFF_AGENT_PROMPT
 
-
 with project_client:
     agent = project_client.agents.create_version(
         agent_name=name,
