@@ -1,0 +1,40 @@
+name: Deploy Interior Designer Agent
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/infra/agents/interior-designer.json'
+      - 'src/prompts/InteriorDesignAgentPrompt.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login via Azure CLI
+        uses: azure/login@v2.1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy interior-designer agent to Foundry
+        env:
+          FOUNDRY_ENDPOINT: ${{ secrets.FOUNDRY_ENDPOINT }}
+          GPT_DEPLOYMENT: ${{ secrets.GPT_DEPLOYMENT }}
+        run: |
+          INSTRUCTIONS=$(python3 -c "import json; print(json.dumps(open('src/prompts/InteriorDesignAgentPrompt.txt').read()))")
+          jq --arg model "$GPT_DEPLOYMENT" \
+             --argjson instructions "$INSTRUCTIONS" \
+             '.definition.model = $model | .definition.instructions = $instructions' \
+             src/infra/agents/interior-designer.json > /tmp/agent-payload.json
+          az rest --method POST \
+            --url "${FOUNDRY_ENDPOINT}/agents/interior-designer/versions?api-version=2025-11-15-preview" \
+            --headers "Content-Type=application/json" \
+            --resource "https://ai.azure.com" \
+            --body @/tmp/agent-payload.json
